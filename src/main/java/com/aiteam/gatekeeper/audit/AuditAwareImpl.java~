@@ -1,0 +1,4 @@
+package com.aiteam.gatekeeper.audit;
+
+public class AuditAwareImpl {
+}
