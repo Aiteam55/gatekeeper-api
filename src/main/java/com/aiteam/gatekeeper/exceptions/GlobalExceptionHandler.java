@@ -26,10 +26,10 @@ public class GlobalExceptionHandler {
                 rootCause.getMessage().contains("unique_name")) {
 
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorApiResponse(409, "Client app name already exists."));
+                    .body(new ErrorApiResponse(HttpStatus.CONFLICT.value(), "Client app name already exists."));
         }
 
-        ErrorApiResponse errorResponse = new ErrorApiResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getLocalizedMessage());
+        ErrorApiResponse errorResponse = new ErrorApiResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Data integrity violation: " + exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
