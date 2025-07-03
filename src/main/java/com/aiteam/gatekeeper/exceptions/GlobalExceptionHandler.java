@@ -1,13 +1,12 @@
 package com.aiteam.gatekeeper.exceptions;
 
-import com.aiteam.gatekeeper.responses.ErrorApiResponse;
+import com.aiteam.gatekeeper.dtos.responses.ErrorApiResponse;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestControllerAdvice

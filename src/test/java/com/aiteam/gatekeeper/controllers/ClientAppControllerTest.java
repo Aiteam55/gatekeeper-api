@@ -1,5 +1,6 @@
 package com.aiteam.gatekeeper.controllers;
 
+import com.aiteam.gatekeeper.dtos.responses.ClientAppResponseDTO;
 import com.aiteam.gatekeeper.services.IClientAppService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,24 @@ public class ClientAppControllerTest {
                 .andExpect(jsonPath("$.status").value(200))
                 .andExpect(jsonPath("$.message").isNotEmpty())
                 .andExpect(jsonPath("$.data").value(true));
+    }
+
+    @Test
+    void registerAppShouldReturnWrappedResponse() throws Exception {
+        when(clientAppService.registerClientApp(any())).thenReturn(
+                new ClientAppResponseDTO("ClientTest", "localhost", "3306", "testdb", "root")
+        );
+
+        mockMvc.perform(post("/api/v1/clientapp/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\": \"ClientTest\", \"host\": \"localhost\", \"port\": \"3306\", \"database\": \"testdb\", \"username\": \"root\", \"password\": \"root\"}"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.status").value(201))
+                .andExpect(jsonPath("$.message").isNotEmpty())
+                .andExpect(jsonPath("$.data.name").value("ClientTest"))
+                .andExpect(jsonPath("$.data.dbHost").value("localhost"))
+                .andExpect(jsonPath("$.data.dbPort").value("3306"))
+                .andExpect(jsonPath("$.data.dbName").value("testdb"))
+                .andExpect(jsonPath("$.data.dbUsername").value("root"));
     }
 }

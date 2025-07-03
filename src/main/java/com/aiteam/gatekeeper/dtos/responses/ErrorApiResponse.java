@@ -1,4 +1,4 @@
-package com.aiteam.gatekeeper.responses;
+package com.aiteam.gatekeeper.dtos.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

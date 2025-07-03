@@ -1,6 +1,7 @@
 package com.aiteam.gatekeeper.services.impl;
 
-import com.aiteam.gatekeeper.dtos.ClientAppDTO;
+import com.aiteam.gatekeeper.dtos.requests.ClientAppRequestDTO;
+import com.aiteam.gatekeeper.dtos.responses.ClientAppResponseDTO;
 import com.aiteam.gatekeeper.entities.ClientApp;
 import com.aiteam.gatekeeper.mappers.ClientAppMapper;
 import com.aiteam.gatekeeper.repositories.ClientAppRepository;
@@ -17,11 +18,11 @@ import java.sql.SQLException;
 public class ClientAppServiceImpl implements IClientAppService {
     private final ClientAppRepository clientAppRepository;
     @Override
-    public boolean testConnection(ClientAppDTO clientAppDTO) {
-        String jdbcUrl = buildJdbcUrl(clientAppDTO.dbHost(), Integer.parseInt(clientAppDTO.dbPort()), clientAppDTO.dbName());
+    public boolean testConnection(ClientAppRequestDTO clientAppRequestDTO) {
+        String jdbcUrl = buildJdbcUrl(clientAppRequestDTO.dbHost(), Integer.parseInt(clientAppRequestDTO.dbPort()), clientAppRequestDTO.dbName());
 
         try {
-            Connection conn = DriverManager.getConnection(jdbcUrl, clientAppDTO.dbUsername(), clientAppDTO.dbPassword());
+            Connection conn = DriverManager.getConnection(jdbcUrl, clientAppRequestDTO.dbUsername(), clientAppRequestDTO.dbPassword());
             return conn.isValid(2); // timeout = 2 seconds
         } catch (SQLException e) {
             return false;
@@ -29,8 +30,8 @@ public class ClientAppServiceImpl implements IClientAppService {
     }
 
     @Override
-    public ClientAppDTO registerClientApp(ClientAppDTO clientAppDTO) {
-        ClientApp newClientApp = ClientAppMapper.mapToClientApp(clientAppDTO, null);
+    public ClientAppResponseDTO registerClientApp(ClientAppRequestDTO clientAppRequestDTO) {
+        ClientApp newClientApp = ClientAppMapper.mapToClientApp(clientAppRequestDTO, null);
         ClientApp savedClientApp = clientAppRepository.save(newClientApp);
         return ClientAppMapper.mapToClientAppDTO(savedClientApp);
     }

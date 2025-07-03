@@ -1,6 +1,6 @@
-package com.aiteam.gatekeeper.dtos;
+package com.aiteam.gatekeeper.dtos.requests;
 
-public record ClientAppDTO(
+public record ClientAppRequestDTO(
         String name,
         String dbHost,
         String dbPort,

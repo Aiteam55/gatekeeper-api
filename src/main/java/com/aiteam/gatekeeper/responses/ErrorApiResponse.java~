@@ -1,4 +1,0 @@
-package com.aiteam.gatekeeper.responses;
-
-public class ErrorApiResponse {
-}

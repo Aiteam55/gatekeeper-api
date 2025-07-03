@@ -1,4 +1,4 @@
-package com.aiteam.gatekeeper.responses;
+package com.aiteam.gatekeeper.dtos.responses;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

@@ -1,6 +1,6 @@
 package com.aiteam.gatekeeper.services;
 
-import com.aiteam.gatekeeper.dtos.ClientAppDTO;
+import com.aiteam.gatekeeper.dtos.requests.ClientAppRequestDTO;
 import com.aiteam.gatekeeper.repositories.ClientAppRepository;
 import com.aiteam.gatekeeper.services.impl.ClientAppServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,15 +23,15 @@ public class ClientAppServiceTest {
 
     @Test
     void testConnectionShouldReturnTrueWithValidCredentials() {
-        ClientAppDTO clientAppDTO = new ClientAppDTO("Client App", "localhost", "3306", "testdb", "root", "root");
-        boolean result = clientAppService.testConnection(clientAppDTO);
+        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "testdb", "root", "root");
+        boolean result = clientAppService.testConnection(clientAppRequestDTO);
         assertTrue(result, "Expected valid DB connection to return true");
     }
 
     @Test
     void testConnectionShouldReturnFalseWithInvalidCredentials() {
-        ClientAppDTO clientAppDTO = new ClientAppDTO("Client App", "localhost", "3306", "wrongdb", "root", "root");
-        boolean result = clientAppService.testConnection(clientAppDTO);
+        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "wrongdb", "root", "root");
+        boolean result = clientAppService.testConnection(clientAppRequestDTO);
         assertFalse(result, "Expected valid DB connection to return false");
     }
 }

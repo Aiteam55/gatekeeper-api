@@ -1,8 +1,9 @@
 package com.aiteam.gatekeeper.services;
 
-import com.aiteam.gatekeeper.dtos.ClientAppDTO;
+import com.aiteam.gatekeeper.dtos.requests.ClientAppRequestDTO;
+import com.aiteam.gatekeeper.dtos.responses.ClientAppResponseDTO;
 
 public interface IClientAppService {
-    boolean testConnection(ClientAppDTO clientAppDTO);
-    ClientAppDTO registerClientApp(ClientAppDTO clientAppDTO);
+    boolean testConnection(ClientAppRequestDTO clientAppRequestDTO);
+    ClientAppResponseDTO registerClientApp(ClientAppRequestDTO clientAppRequestDTO);
 }
