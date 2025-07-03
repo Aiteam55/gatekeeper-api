@@ -1,5 +1,0 @@
-package com.aiteam.gatekeeper.services;
-
-public interface IClientAppService {
-    boolean testConnection();
-}

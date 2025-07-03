@@ -1,6 +1,7 @@
 package com.aiteam.gatekeeper.services;
 
 import com.aiteam.gatekeeper.dtos.ClientAppDTO;
+import com.aiteam.gatekeeper.repositories.ClientAppRepository;
 import com.aiteam.gatekeeper.services.impl.ClientAppServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 public class ClientAppServiceTest {
     private IClientAppService clientAppService;
+    private ClientAppRepository clientAppRepository;
 
     @BeforeEach
     public void setup() {
-        clientAppService = new ClientAppServiceImpl();
+        clientAppService = new ClientAppServiceImpl(clientAppRepository);
     }
 
     @Test

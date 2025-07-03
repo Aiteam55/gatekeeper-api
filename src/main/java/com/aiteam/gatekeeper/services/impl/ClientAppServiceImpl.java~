@@ -1,8 +1,6 @@
 package com.aiteam.gatekeeper.services.impl;
 
 import com.aiteam.gatekeeper.dtos.ClientAppDTO;
-import com.aiteam.gatekeeper.entities.ClientApp;
-import com.aiteam.gatekeeper.mappers.ClientAppMapper;
 import com.aiteam.gatekeeper.repositories.ClientAppRepository;
 import com.aiteam.gatekeeper.services.IClientAppService;
 import lombok.AllArgsConstructor;
@@ -30,9 +28,7 @@ public class ClientAppServiceImpl implements IClientAppService {
 
     @Override
     public ClientAppDTO registerClientApp(ClientAppDTO clientAppDTO) {
-        ClientApp newClientApp = ClientAppMapper.mapToClientApp(clientAppDTO, null);
-        ClientApp savedClientApp = clientAppRepository.save(newClientApp);
-        return ClientAppMapper.mapToClientAppDTO(savedClientApp);
+        return clientAppDTO;
     }
 
     private String buildJdbcUrl(String host, int port, String dbName) {

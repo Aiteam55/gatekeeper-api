@@ -21,4 +21,12 @@ public class ClientAppController {
         ApiResponse<Boolean> response = new ApiResponse<>(HttpStatus.OK.value(), "Testing database connection", result);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<ClientAppDTO>> register(@RequestBody ClientAppDTO dto) {
+        ClientAppDTO app = clientAppService.registerClientApp(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new ApiResponse<>(201, "App registered successfully", app)
+        );
+    }
 }

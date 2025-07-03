@@ -4,4 +4,5 @@ import com.aiteam.gatekeeper.dtos.ClientAppDTO;
 
 public interface IClientAppService {
     boolean testConnection(ClientAppDTO clientAppDTO);
+    ClientAppDTO registerClientApp(ClientAppDTO clientAppDTO);
 }

@@ -33,6 +33,6 @@ public class Auditable {
     private LocalDateTime updatedAt;
 
     @LastModifiedBy
-    @Column(name = "updated_by", insertable = false)
+    @Column(name = "created_at", insertable = false)
     private String updatedBy;
 }
