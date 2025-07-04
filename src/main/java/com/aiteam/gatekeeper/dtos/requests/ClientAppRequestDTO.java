@@ -6,5 +6,6 @@ public record ClientAppRequestDTO(
         String dbPort,
         String dbName,
         String dbUsername,
-        String dbPassword
+        String dbPassword,
+        int userId
 ) {}

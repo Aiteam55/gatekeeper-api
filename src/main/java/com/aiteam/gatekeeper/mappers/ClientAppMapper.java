@@ -11,7 +11,8 @@ public class ClientAppMapper {
                 clientApp.getDbHost(),
                 clientApp.getDbPort(),
                 clientApp.getDbName(),
-                clientApp.getDbUsername()
+                clientApp.getDbUsername(),
+                clientApp.getUserId()
         );
     }
 
@@ -23,7 +24,8 @@ public class ClientAppMapper {
                 clientAppRequestDTO.dbPort(),
                 clientAppRequestDTO.dbName(),
                 clientAppRequestDTO.dbUsername(),
-                clientAppRequestDTO.dbPassword()
+                clientAppRequestDTO.dbPassword(),
+                clientAppRequestDTO.userId()
         );
     }
 }

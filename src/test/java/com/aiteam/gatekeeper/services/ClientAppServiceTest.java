@@ -26,14 +26,14 @@ public class ClientAppServiceTest {
 
     @Test
     void testConnectionShouldReturnTrueWithValidCredentials() {
-        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "testdb", "root", "root");
+        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "testdb", "root", "root", 1);
         boolean result = clientAppService.testConnection(clientAppRequestDTO);
         assertTrue(result, "Expected valid DB connection to return true");
     }
 
     @Test
     void testConnectionShouldReturnFalseWithInvalidCredentials() {
-        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "wrongdb", "root", "root");
+        ClientAppRequestDTO clientAppRequestDTO = new ClientAppRequestDTO("Client App", "localhost", "3306", "wrongdb", "root", "root",1);
         boolean result = clientAppService.testConnection(clientAppRequestDTO);
         assertFalse(result, "Expected valid DB connection to return false");
     }
@@ -50,7 +50,7 @@ public class ClientAppServiceTest {
         clientApp.setDbPassword("secret");
 
         ClientAppRequestDTO dto = new ClientAppRequestDTO(
-                "ClientTest", "localhost", "3306", "testdb", "root", "secret"
+                "ClientTest", "localhost", "3306", "testdb", "root", "secret", 1
         );
 
         when(clientAppRepository.save(any(ClientApp.class))).thenReturn(clientApp);

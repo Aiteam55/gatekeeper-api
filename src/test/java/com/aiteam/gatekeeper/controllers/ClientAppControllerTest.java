@@ -41,7 +41,7 @@ public class ClientAppControllerTest {
     @Test
     void registerAppShouldReturnWrappedResponse() throws Exception {
         when(clientAppService.registerClientApp(any())).thenReturn(
-                new ClientAppResponseDTO("ClientTest", "localhost", "3306", "testdb", "root")
+                new ClientAppResponseDTO("ClientTest", "localhost", "3306", "testdb", "root",1)
         );
 
         mockMvc.perform(post("/api/v1/clientapp/register")
@@ -54,6 +54,7 @@ public class ClientAppControllerTest {
                 .andExpect(jsonPath("$.data.dbHost").value("localhost"))
                 .andExpect(jsonPath("$.data.dbPort").value("3306"))
                 .andExpect(jsonPath("$.data.dbName").value("testdb"))
-                .andExpect(jsonPath("$.data.dbUsername").value("root"));
+                .andExpect(jsonPath("$.data.dbUsername").value("root"))
+                .andExpect(jsonPath("$.data.userId").value(1));
     }
 }

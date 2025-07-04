@@ -6,9 +6,12 @@ CREATE TABLE IF NOT EXISTS client_app (
     db_name VARCHAR(255) NOT NULL,
     db_username VARCHAR(255) NOT NULL,
     db_password TEXT NOT NULL,
+    user_id BIGINT NOT NULL,
 
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255),
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated_by VARCHAR(255)
+    updated_by VARCHAR(255),
+
+     CONSTRAINT unique_name UNIQUE (name)
 );

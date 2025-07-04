@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -19,16 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorApiResponse> handleSQLException(DataIntegrityViolationException exception) {
-        Throwable rootCause = exception.getRootCause();
-
-        if (rootCause instanceof SQLIntegrityConstraintViolationException &&
-                rootCause.getMessage().contains("unique_name")) {
-
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new ErrorApiResponse(HttpStatus.CONFLICT.value(), "Client app name already exists."));
-        }
-
-        ErrorApiResponse errorResponse = new ErrorApiResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Data integrity violation: " + exception.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorApiResponse errorResponse = new ErrorApiResponse(HttpStatus.CONFLICT.value(), "Data integrity violation: " + Objects.requireNonNull(exception.getRootCause()).getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 }

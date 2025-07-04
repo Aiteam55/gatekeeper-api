@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/v1/clientapp", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
@@ -28,6 +30,14 @@ public class ClientAppController {
         ClientAppResponseDTO app = clientAppService.registerClientApp(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(HttpStatus.CREATED.value(), "App registered successfully", app)
+        );
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<ClientAppResponseDTO>>> getAllApps(@PathVariable int userId) {
+        List<ClientAppResponseDTO> apps = clientAppService.getAllClientApps(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponse<>(HttpStatus.OK.value(), "Apps retrieved successfully", apps)
         );
     }
 }

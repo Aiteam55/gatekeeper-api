@@ -6,12 +6,14 @@ import com.aiteam.gatekeeper.entities.ClientApp;
 import com.aiteam.gatekeeper.mappers.ClientAppMapper;
 import com.aiteam.gatekeeper.repositories.ClientAppRepository;
 import com.aiteam.gatekeeper.services.IClientAppService;
+import com.aiteam.gatekeeper.utils.DatabaseUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +21,7 @@ public class ClientAppServiceImpl implements IClientAppService {
     private final ClientAppRepository clientAppRepository;
     @Override
     public boolean testConnection(ClientAppRequestDTO clientAppRequestDTO) {
-        String jdbcUrl = buildJdbcUrl(clientAppRequestDTO.dbHost(), Integer.parseInt(clientAppRequestDTO.dbPort()), clientAppRequestDTO.dbName());
+        String jdbcUrl = DatabaseUtil.buildJdbcUrl(clientAppRequestDTO.dbHost(), Integer.parseInt(clientAppRequestDTO.dbPort()), clientAppRequestDTO.dbName());
 
         try {
             Connection conn = DriverManager.getConnection(jdbcUrl, clientAppRequestDTO.dbUsername(), clientAppRequestDTO.dbPassword());
@@ -36,8 +38,11 @@ public class ClientAppServiceImpl implements IClientAppService {
         return ClientAppMapper.mapToClientAppDTO(savedClientApp);
     }
 
-    private String buildJdbcUrl(String host, int port, String dbName) {
-        return "jdbc:mysql://" + host + ":" + port + "/" + dbName +
-                "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    @Override
+    public List<ClientAppResponseDTO> getAllClientApps(int userId) {
+        List<ClientApp> clientApps = clientAppRepository.findAllByUserId(userId);
+        return clientApps.stream()
+                .map(ClientAppMapper::mapToClientAppDTO)
+                .toList();
     }
 }

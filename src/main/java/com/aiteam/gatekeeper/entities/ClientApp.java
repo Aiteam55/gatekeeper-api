@@ -26,4 +26,6 @@ public class ClientApp extends Auditable{
     private String dbUsername;
     @Column(name = "db_password")
     private String dbPassword;
+    @Column(name = "user_id")
+    private int userId;
 }

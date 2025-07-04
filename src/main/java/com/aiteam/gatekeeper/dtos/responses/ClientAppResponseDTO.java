@@ -5,5 +5,6 @@ public record ClientAppResponseDTO(
         String dbHost,
         String dbPort,
         String dbName,
-        String dbUsername
+        String dbUsername,
+        int userId
 ) {}
