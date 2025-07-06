@@ -36,6 +36,11 @@ public class ClientAppController {
     @GetMapping("/{userId}")
     public ResponseEntity<ApiResponse<List<ClientAppResponseDTO>>> getAllApps(@PathVariable int userId) {
         List<ClientAppResponseDTO> apps = clientAppService.getAllClientApps(userId);
+        if(apps.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "No apps found for userId " + userId, apps)
+            );
+        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(HttpStatus.OK.value(), "Apps retrieved successfully", apps)
         );
