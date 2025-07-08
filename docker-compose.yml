@@ -1,0 +1,42 @@
+services:
+  gatekeeper-db:
+    image: mysql:8
+    container_name: gatekeeper-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: gatekeeperdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - gatekeeper
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+
+  gatekeeper-api:
+    container_name: gatekeeper-api
+    build: .
+    ports:
+      - "8081:8081"
+    depends_on:
+      gatekeeper-db:
+        condition: service_healthy
+    environment:
+        SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - gatekeeper
+
+networks:
+  gatekeeper:
+    driver: "bridge"
+
+volumes:
+  mysql_data:
