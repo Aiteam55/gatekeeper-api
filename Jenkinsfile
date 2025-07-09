@@ -52,8 +52,8 @@ pipeline {
                         echo "Deploying on EC2 via Docker Compose..."
                         ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_HOST} "
                             cd ${REMOTE_DIR} &&
-                            docker compose down || true &&
-                            docker compose up --build -d
+                            docker-compose down || true &&
+                            docker-compose up --build -d
                         "
                     """
                 }
