@@ -23,7 +23,7 @@ pipeline {
                 sshagent(credentials: ["${SSH_KEY_ID}"]) {
                     sh """
                         echo "Testing connection to EC2..."
-                        ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${EC2_HOST} "echo 'SSH connection successful!' && hostname && whoami"
+                        ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_HOST} "echo 'SSH connection successful!' && hostname && whoami"
                     """
                 }
             }
