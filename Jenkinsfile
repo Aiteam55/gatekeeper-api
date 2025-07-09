@@ -33,12 +33,19 @@ pipeline {
         stage('Copy files to EC2') {
             steps {
                 sshagent(credentials: ["${SSH_KEY_ID}"]) {
-                    sh """
+                     sh """
+                        echo "Preparing remote directory..."
+                        ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_HOST} \\
+                            'mkdir -p ${REMOTE_DIR}/target'
+
                         echo "Copying app files..."
-                        scp -o StrictHostKeyChecking=no \
-                            target/*.jar \
-                            docker-compose.yml \
-                            Dockerfile \
+                        scp -o StrictHostKeyChecking=no \\
+                            target/*.jar \\
+                            ${EC2_USERNAME}@${EC2_HOST}:${REMOTE_DIR}/target/
+
+                        scp -o StrictHostKeyChecking=no \\
+                            docker-compose.yml \\
+                            Dockerfile \\
                             ${EC2_USERNAME}@${EC2_HOST}:${REMOTE_DIR}/
                     """
                 }
