@@ -9,6 +9,7 @@ pipeline {
         SSH_KEY_ID = 'gatekeeper-ssh-key'
         EC2_HOST = '13.60.236.205'
         EC2_USERNAME = 'ec2-user'
+        REMOTE_DIR = '/home/ec2-user/gatekeeper-api'
     }
 
     stages {
@@ -24,6 +25,36 @@ pipeline {
                     sh """
                         echo "Testing connection to EC2..."
                         ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_HOST} "echo 'SSH connection successful!' && hostname && whoami"
+                    """
+                }
+            }
+        }
+
+        stage('Copy files to EC2') {
+            steps {
+                sshagent(credentials: ["${SSH_KEY_ID}"]) {
+                    sh """
+                        echo "Copying app files..."
+                        scp -o StrictHostKeyChecking=no \
+                            target/*.jar \
+                            docker-compose.yml \
+                            Dockerfile \
+                            ${EC2_USERNAME}@${EC2_HOST}:${REMOTE_DIR}/
+                    """
+                }
+            }
+        }
+
+         stage('Deploy on EC2') {
+            steps {
+                sshagent(credentials: ["${SSH_KEY_ID}"]) {
+                    sh """
+                        echo "Deploying on EC2 via Docker Compose..."
+                        ssh -o StrictHostKeyChecking=no ${EC2_USERNAME}@${EC2_HOST} "
+                            cd ${REMOTE_DIR} &&
+                            docker compose down || true &&
+                            docker compose up --build -d
+                        "
                     """
                 }
             }
