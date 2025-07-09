@@ -5,8 +5,7 @@ server:
 
 spring:
   profiles:
-    active:
-      - dev
+    active: dev
   application:
     name: gatekeeper
   jpa:
