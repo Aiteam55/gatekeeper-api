@@ -35,6 +35,7 @@ services:
       resources:
         limits:
           memory: 700m
+    restart: unless-stopped
     networks:
       - gatekeeper
 
