@@ -10,7 +10,7 @@ apt update && apt upgrade -y
 echo "Installing Docker..."
 apt install -y docker.io
 usermod -aG docker ubuntu
-
+newgrp docker
 echo "Installing Docker Compose..."
 apt install -y docker-compose
 
