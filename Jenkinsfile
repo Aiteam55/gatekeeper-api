@@ -7,8 +7,8 @@ pipeline {
 
     environment {
         SSH_KEY_ID = 'gatekeeper-ssh-key'
-        EC2_HOST = '13.60.79.230'
-        EC2_USERNAME = 'ec2-user'
+        EC2_HOST = '13.48.135.214'
+        EC2_USERNAME = 'ubuntu'
         REMOTE_DIR = '/home/ec2-user/gatekeeper-api'
     }
 
