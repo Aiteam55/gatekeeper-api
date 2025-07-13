@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         SSH_KEY_ID = 'gatekeeper-ssh-key'
-        EC2_HOST = '13.48.135.214'
+        EC2_HOST = '13.51.193.164'
         EC2_USERNAME = 'ubuntu'
         REMOTE_DIR = '/home/ubuntu/gatekeeper-api'
     }
@@ -61,6 +61,9 @@ pipeline {
                             cd ${REMOTE_DIR} &&
                             docker-compose down || true &&
                             docker-compose up --build -d
+                            sleep 10 &&
+                            echo 'Checking if gatekeeper-api container is running...' &&
+                            docker ps | grep gatekeeper-api || (echo 'gatekeeper-api is NOT running!' && exit 1)
                         "
                     """
                 }

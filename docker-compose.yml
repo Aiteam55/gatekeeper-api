@@ -31,6 +31,8 @@ services:
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: root
       SERVER_PORT: 8081
+      JAVA_TOOL_OPTIONS: "-Xmx384m -Xms256m"
+
     deploy:
       resources:
         limits:
